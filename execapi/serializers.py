@@ -2,12 +2,8 @@ from rest_framework import serializers
 
 from execapi.models import *
 
-'''
-Voluntary
-'''
 # Accountable
 class AccountableSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Accountable
         fields = (
@@ -18,7 +14,6 @@ class AccountableSerializer(serializers.ModelSerializer):
 
 # Address
 class AddressSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Address
         fields = (
@@ -56,10 +51,6 @@ class AttendenceSerializer(serializers.ModelSerializer):
 class InstitutionSerializer(serializers.ModelSerializer):
 
     class Meta:
-        #Dado sensivel
-        extra_kargs = {
-            'email': {'write_only':True}
-        }
         model = Institution
         fields = (
             'id',
@@ -84,7 +75,7 @@ class PhoneInstitutionSerializer(serializers.ModelSerializer):
 class PhoneUserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = PhoneInstitution
+        model = PhoneUser
         fields = (
             'id',
             'number',
@@ -119,11 +110,7 @@ class UserSerializer(serializers.ModelSerializer):
 class VoluntarySerializer(serializers.ModelSerializer):
 
     class Meta:
-        #Dado sensivel
-        extra_kargs = {
-            'email': {'write_only':True}
-        }
-        model = Institution
+        model = Voluntary
         fields = (
             'id',
             'user',
@@ -132,6 +119,8 @@ class VoluntarySerializer(serializers.ModelSerializer):
             'completed_hours',
             'comments'
         )
+
+
 
 
 

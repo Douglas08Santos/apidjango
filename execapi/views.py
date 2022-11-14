@@ -1,61 +1,79 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse, HttpRequest
-from django.views.generic import ListView
-from .models import *
-import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from execapi.models import *
+from execapi.serializers import *
+
+from rest_framework import authentication, permissions
+authentication_classes = [authentication.TokenAuthentication, ]
+permission_classes = [permissions.IsAuthenticated, ]
+'''
+# Address
+# Attendence
+# Institution
+# PhoneInstitution
+# PhoneUser
+# Voluntary
+'''
 # Create your views here.
 
-#Return all accountables
-def get_accountables(request):
-    if request.method == 'GET':
-        data = list(Accountable.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all address
-def get_address(request):
-    if request.method == 'GET':
-        data = list(Address.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all attendences
-def get_attendences(request):
-    if request.method == 'GET':
-        data = list(Attendence.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all institutions
-def get_institutions(request):
-    if request.method == 'GET':
-        data = list(Institution.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all phones users
-def get_phones_users(request):
-    if request.method == 'GET':
-        data = list(PhoneUser.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all phones institutions
-def get_phones_institutions(request):
-    if request.method == 'GET':
-        data = list(PhoneInstitution.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all users
-def get_users(request):
-    if request.method == 'GET':
-        data = list(User.objects.values())
-        return JsonResponse(data, safe=False)
-
-#Return all voluntaries
-def get_voluntaries(request):
-    if request.method == 'GET':
-        data = list(Institution.objects.values())
-        return JsonResponse(data, safe=False)
+# Accountable
+class AccountableAPIView(APIView):
+    def get(self, request):
+        accountables = Accountable.objects.all()
+        serializer = AccountableSerializer(accountables, many=True)
+        return Response(serializer.data)
 
 
+# Address
+class AddressAPIView(APIView):
+    def get(self, request):
+        addresses = Address.objects.all()
+        serializer = AddressSerializer(addresses, many=True)
+        return Response(serializer.data)
 
-    
-        
-   
+# Attendence
+class AttendenceAPIView(APIView):
+    def get(self, request):
+        attendences = Attendence.objects.all()
+        serializer = AttendenceSerializer(attendences, many=True)
+        return Response(serializer.data)
+
+# Institution
+class InstitutionAPIView(APIView):
+    def get(self, request):
+        institutions = Accountable.objects.all()
+        serializer = InstitutionSerializer(institutions, many=False)
+        return Response(serializer.data)
+
+# PhoneInstitution
+class PhoneInstitutionAPIView(APIView):
+    def get(self, request):
+        phoneInstituions = PhoneInstitution.objects.all()
+        serializer = PhoneInstitutionSerializer(phoneInstituions, many=True)
+        return Response(serializer.data)
+
+# PhoneUser
+class PhoneUserAPIView(APIView):
+    def get(self, request):
+        phoneUsers = PhoneUser.objects.all()
+        serializer = PhoneUserSerializer(phoneUsers, many=True)
+        return Response(serializer.data)
+
+# User
+class UserAPIView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+# Voluntary
+class VoluntaryAPIView(APIView):
+    def get(self, request):
+        voluntaries = Voluntary.objects.all()
+        serializer = VoluntarySerializer(voluntaries, many=True)
+        return Response(serializer.data)
+
+
+
+
 

@@ -18,17 +18,22 @@ from django.urls import path, include
 from execapi import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #Config rest_framework
+    path('auth/', include('rest_framework.urls')),
+    #Api
+    path('api/v1/', include('execapi.urls'))
+]
 
-    #Models get
+
+'''
+#Views    
+    path('users/', views.UserAPIView.as_view),
     path('accountables/', views.get_accountables),
     path('addresses/', views.get_address),
     path('attendences/', views.get_attendences),
     path('institutions/', views.get_institutions),
     path('phones/users/', views.get_phones_users),
     path('phones/institutions/', views.get_phones_institutions),
-    path('users/', views.get_users),
-    path('voluntaries/', views.get_voluntaries),
 
-    #Config rest_framework
-    path('v1/', include('rest_framework.urls'))
-]
+     path('voluntaries/', views.get_voluntaries),
+'''
