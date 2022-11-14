@@ -24,6 +24,7 @@ class AddressSerializer(serializers.ModelSerializer):
 
 # Institution
 class InstitutionSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
     class Meta:
         model = Institution
         fields = (

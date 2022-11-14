@@ -50,8 +50,8 @@ class AttendenceAPIView(APIView):
 # Institution
 class InstitutionAPIView(APIView):
     def get(self, request):
-        institutions = Accountable.objects.all()
-        serializer = InstitutionSerializer(institutions, many=False)
+        institutions = Institution.objects.all()
+        serializer = InstitutionSerializer(institutions, many=True)
         return Response(serializer.data)
 
 # PhoneInstitution
