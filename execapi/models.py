@@ -92,9 +92,9 @@ class Accountable(models.Model):
 class Attendence(models.Model):
     voluntary = models.ForeignKey(Voluntary, on_delete=models.CASCADE, null=True)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, null=True)
-    input_time = models.DateTimeField()
+    input_time = models.DateTimeField(auto_now_add=True)
     input_photo = models.ImageField(null=True, blank=True)
-    output_time = models.DateTimeField()
+    output_time = models.DateTimeField(auto_now_add=True)
     output_photo = models.ImageField(null=True, blank=True)
     is_checked = models.BooleanField()
     # TODO: Adicionar alguma biblioteca para trabalhar com latitude e longitude
