@@ -24,9 +24,13 @@ class UserAdmin(admin.ModelAdmin):
         'first_name', 'last_name', 'national_id',
         'email', 'is_voluntary', 'is_accountable')
 
-@admin.register(Phone)
-class PhoneAdmin(admin.ModelAdmin):
-    list_display = ('number', 'is_active')
+@admin.register(PhoneUser)
+class PhoneUserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'number', 'is_active')
+
+@admin.register(PhoneInstitution)
+class PhoneInstitutionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'institution', 'number', 'is_active')
 
 
 @admin.register(Voluntary)
@@ -35,4 +39,4 @@ class VoluntaryAdmin(admin.ModelAdmin):
 
 @admin.register(Institution)
 class InstitutionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'email', 'number', 'address')
+    list_display = ('id', 'name', 'email', 'address')

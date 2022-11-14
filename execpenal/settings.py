@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Custom config
+    'django_filters',
+    'rest_framework',
     
-    'execapi'
+    'execapi',
 ]
 
 MIDDLEWARE = [
@@ -125,8 +129,18 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Custom config
 AUTH_USER_MODEL = 'execapi.User'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':{
+        'rest_framework.authetication.SessionAuthentication',
+    },
+    'DEFAULT_PERMISSION_CLASSES':{
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    }
+}

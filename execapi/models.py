@@ -19,38 +19,48 @@ class Address(models.Model):
     lat = models.CharField('Latitude', max_length=20, default='')
     long = models.CharField('Longitude', max_length=20, default='')
 
+    class Meta:
+        verbose_name_plural = 'Addresses'
+        unique_together = ['lat', 'long']
     def __str__(self):
         return '{}-{}'.format(self.street, self.zip)
-
-class Phone(models.Model):
-    number = models.CharField('Numero', max_length=15, default='')
-    is_active = models.BooleanField('Ativo?', default=True)
-
-
-    def __str__(self):
-        return self.number
 
 class User(AbstractUser):
     is_voluntary = models.BooleanField('Voluntario', default=False)
     is_accountable = models.BooleanField('Responsavel', default=False)
-    national_id = models.CharField('CPF', max_length=14, default='')
-    number = models.OneToOneField(to=Phone, on_delete=models.CASCADE, null=True)
+    national_id = models.CharField('CPF', max_length=14, blank=True, null=True, unique=True)
+    
 
+class PhoneUser(models.Model):
+    number = models.CharField('Numero', max_length=15, unique=True)
+    is_active = models.BooleanField('Ativo?', default=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    
     class Meta:
-        unique_together = ['national_id', 'number']
-
-
+        verbose_name_plural = 'Users Phones'
+    
+    def __str__(self):
+        return self.number
 
 class Institution(models.Model):
     name = models.CharField('Nome', max_length=100, default='')
     email = models.CharField('Email', max_length=100, default='')
-    number = models.ForeignKey(verbose_name='Telefone', to=Phone, on_delete=models.CASCADE, null=True)
     address = models.ForeignKey(verbose_name='Endereco',to=Address, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        unique_together = [['name', 'email'], ['name', 'number'], ['name', 'address']]
+        unique_together = [['name', 'email'], ['name', 'address'], ['email', 'address']]
     def __str__(self):
         return self.name
+
+class PhoneInstitution(models.Model):
+    number = models.CharField('Numero', max_length=15, unique=True)
+    is_active = models.BooleanField('Ativo?', default=True)
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Institutions Phones'
+    def __str__(self):
+        return self.number
 
 class Voluntary(models.Model):
     #One-to-One with User
@@ -88,9 +98,9 @@ class Attendence(models.Model):
     output_photo = models.ImageField(null=True, blank=True)
     is_checked = models.BooleanField()
     # TODO: Adicionar alguma biblioteca para trabalhar com latitude e longitude
-    latitude = models.CharField(max_length=15, default='')
-    longitude = models.CharField(max_length=15, default='')
-    commments = models.TextField(max_length=200)
+    latitude = models.CharField(max_length=15, null=True)
+    longitude = models.CharField(max_length=15, null=True)
+    commments = models.TextField(max_length=200, blank=True)
 
     class Meta:
         unique_together = ['voluntary', 'input_time', 'output_time']

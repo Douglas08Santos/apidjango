@@ -14,9 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from execapi import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', views.get_users)
+
+    #Models get
+    path('accountables/', views.get_accountables),
+    path('addresses/', views.get_address),
+    path('attendences/', views.get_attendences),
+    path('institutions/', views.get_institutions),
+    path('phones/users/', views.get_phones_users),
+    path('phones/institutions/', views.get_phones_institutions),
+    path('users/', views.get_users),
+    path('voluntaries/', views.get_voluntaries),
+
+    #Config rest_framework
+    path('v1/', include('rest_framework.urls'))
 ]
