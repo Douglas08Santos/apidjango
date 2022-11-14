@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Custom config
     'django_filters',
     'rest_framework',
+    'drf_yasg',
     
     'execapi',
 ]
