@@ -45,7 +45,7 @@ class PhoneUser(models.Model):
 class Institution(models.Model):
     name = models.CharField('Nome', max_length=100, default='')
     email = models.CharField('Email', max_length=100, default='')
-    address = models.ForeignKey(verbose_name='Endereco',to=Address, on_delete=models.CASCADE, null=True)
+    address = models.OneToOneField(verbose_name='Endereco',to=Address, on_delete=models.CASCADE, null=True)
 
     class Meta:
         unique_together = [['name', 'email'], ['name', 'address'], ['email', 'address']]
@@ -66,7 +66,7 @@ class Voluntary(models.Model):
     #One-to-One with User
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     #One-to-many institution-Voluntary
-    institution = models.ForeignKey(Institution, on_delete=models.CASCADE, null=True)
+    institution = models.OneToOneField(Institution, on_delete=models.CASCADE, null=True)
 
     time_penalty = models.IntegerField(default=0)
     completed_hours = models.IntegerField(default=0)
@@ -90,8 +90,8 @@ class Accountable(models.Model):
         unique_together = ['user', 'institution']
 
 class Attendence(models.Model):
-    voluntary = models.ForeignKey(Voluntary, on_delete=models.CASCADE, null=True)
-    institution = models.ForeignKey(Institution, on_delete=models.CASCADE, null=True)
+    voluntary = models.OneToOneField(Voluntary, on_delete=models.CASCADE, null=True)
+    institution = models.OneToOneField(Institution, on_delete=models.CASCADE, null=True)
     input_time = models.DateTimeField(auto_now_add=True)
     input_photo = models.ImageField(null=True, blank=True)
     output_time = models.DateTimeField(auto_now_add=True)

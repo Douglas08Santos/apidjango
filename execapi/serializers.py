@@ -2,15 +2,7 @@ from rest_framework import serializers
 
 from execapi.models import *
 
-# Accountable
-class AccountableSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Accountable
-        fields = (
-            'id',
-            'user',
-            'institution'
-        )
+
 
 # Address
 class AddressSerializer(serializers.ModelSerializer):
@@ -28,28 +20,10 @@ class AddressSerializer(serializers.ModelSerializer):
             'long'
         )
 
-# Attendence
-class AttendenceSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Attendence
-        fields = (
-            'id',
-            'voluntary',
-            'institution',
-            'input_time',
-            'input_photo',
-            'output_time',
-            'output_photo',
-            'latitude',
-            'longitude',
-            'commments',
-            'is_checked'
-        )
 
 # Institution
 class InstitutionSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Institution
         fields = (
@@ -61,25 +35,13 @@ class InstitutionSerializer(serializers.ModelSerializer):
 
 # PhoneInstitution
 class PhoneInstitutionSerializer(serializers.ModelSerializer):
-
+    institution = InstitutionSerializer()
     class Meta:
         model = PhoneInstitution
         fields = (
             'id',
             'number',
             'institution',
-            'is_active'
-        ) 
-
-# PhoneUser
-class PhoneUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = PhoneUser
-        fields = (
-            'id',
-            'number',
-            'user',
             'is_active'
         ) 
 
@@ -106,9 +68,22 @@ class UserSerializer(serializers.ModelSerializer):
             'is_active'
         )
 
+# PhoneUser
+class PhoneUserSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = PhoneUser
+        fields = (
+            'id',
+            'number',
+            'user',
+            'is_active'
+        ) 
+
 # Voluntary
 class VoluntarySerializer(serializers.ModelSerializer):
-
+    user = UserSerializer()
+    institution = InstitutionSerializer()
     class Meta:
         model = Voluntary
         fields = (
@@ -120,7 +95,36 @@ class VoluntarySerializer(serializers.ModelSerializer):
             'comments'
         )
 
+# Attendence
+class AttendenceSerializer(serializers.ModelSerializer):
+    voluntary = VoluntarySerializer()
+    institution = InstitutionSerializer()
+    class Meta:
+        model = Attendence
+        fields = (
+            'id',
+            'voluntary',
+            'institution',
+            'input_time',
+            'input_photo',
+            'output_time',
+            'output_photo',
+            'latitude',
+            'longitude',
+            'commments',
+            'is_checked'
+        )
 
-
+# Accountable
+class AccountableSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    institution = InstitutionSerializer()
+    class Meta:
+        model = Accountable
+        fields = (
+            'id',
+            'user',
+            'institution'
+        )
 
 

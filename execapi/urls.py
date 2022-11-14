@@ -8,7 +8,7 @@ urlpatterns = [
     path('attendences/', AttendenceAPIView.as_view(), name='attendences'),
     path('institutions/', InstitutionAPIView.as_view(), name='institutions'),
     path('phones/users/', PhoneUserAPIView.as_view(), name='phones/users'),
-    path('phones/institutions/', PhoneInstitutionAPIView.as_view(), name='phones/institution'),
+    path('phones/institutions/', PhoneInstitutionAPIView.as_view(), name='phones/institutions'),
     path('users/', UserAPIView.as_view(), name='users'),
     path('voluntaries/', VoluntaryAPIView.as_view(), name='voluntaries'),
 ]
