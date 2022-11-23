@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1+9b3i#7v#s!rittw#50-%tp821c^kgc=%yh23t)lpg_lkup^(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'drf_yasg',
+    'corsheaders',
+    'rest_framework.authtoken',
 
     'api',
 ]
@@ -54,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'execpenal.urls'
@@ -79,6 +83,19 @@ WSGI_APPLICATION = 'execpenal.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
+# COFIGURAÇÂO PARA USARMOS MYSQL
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'exec_penal_DB',
+#         'USER': 'root',
+#         'PASSWORD': 'myuser',
+#         'HOST': '127.0.0.1', 
+#         'PORT': '3306',
+#     }
+# }
 
 DATABASES = {
     'default': {
